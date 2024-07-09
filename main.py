@@ -1,6 +1,7 @@
 import pygame
 import os
 import math
+import time
 
 # pygame setup
 pygame.init()
@@ -14,10 +15,13 @@ dt = 0
 # Sprites
 player_idle = pygame.image.load(os.path.join('assets', '.png_files' ,'idle_character.png'))
 player_idle = pygame.transform.scale(player_idle, (160, 160))
+player_up_left = pygame.image.load(os.path.join('assets', '.png_files' ,'moving_up_left_hand.png'))
+player_up_left = pygame.transform.scale(player_up_left, (160, 160))
+player_up_right = pygame.image.load(os.path.join('assets', '.png_files' ,'moving_up_right_hand.png'))
+player_up_right = pygame.transform.scale(player_up_right, (160, 160))
 
 # velocity
 player_velocity = 10
-
 object_velocity = 10
 
 # Co-ordinates
@@ -54,6 +58,18 @@ while running:
         move_y = move_y / math.sqrt(2)
         move_x = move_x / math.sqrt(2)
 
+    while move_x != 0 or move_y != 0:
+       current_sprite = player_up_left
+       time.sleep(1) 
+       current_sprite = player_up_right
+    else:
+        current_sprite = player_idle
+
+    # Print statements for debugging
+    print(f"Move_x: {move_x}, Move_y: {move_y}")
+    print(f"Keys pressed: W:{keys[pygame.K_w]} S:{keys[pygame.K_s]} A:{keys[pygame.K_a]} D:{keys[pygame.K_d]}")
+
+
     # Applying the movement to the co-ordinates
     player_coordinates_x += move_x * player_velocity
     player_coordinates_y += move_y * player_velocity
@@ -62,7 +78,7 @@ while running:
     screen.fill((84, 192, 214))
 
     # Drawing character images
-    screen.blit(player_idle, (player_coordinates_x, player_coordinates_y))
+    screen.blit(current_sprite, (player_coordinates_x, player_coordinates_y))
 
     # flip() the display to put your work on screen
     pygame.display.flip()
