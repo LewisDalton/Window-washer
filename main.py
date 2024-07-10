@@ -1,8 +1,25 @@
 import pygame
 import os
 import math
-import time
 
+# Sprites
+class player:
+    def __init__(self) -> None:
+        super().__init__()
+        self.sprites: list = []
+        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'idle_character.png')))
+        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'moving_up_left_hand.png')))
+        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'moving_up_right_hand.png')))
+        self.current_sprite: int = 0
+        self.image = self.sprites[self.current_sprite]
+        pass
+
+class controls:
+    def __init__(self) -> None:
+        super().__init__()
+        self.        
+        
+        pass
 # pygame setup
 pygame.init()
 screen_width = 828
@@ -11,14 +28,6 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
 running = True
 dt = 0
-
-# Sprites
-player_idle = pygame.image.load(os.path.join('assets', '.png_files' ,'idle_character.png'))
-player_idle = pygame.transform.scale(player_idle, (160, 160))
-player_up_left = pygame.image.load(os.path.join('assets', '.png_files' ,'moving_up_left_hand.png'))
-player_up_left = pygame.transform.scale(player_up_left, (160, 160))
-player_up_right = pygame.image.load(os.path.join('assets', '.png_files' ,'moving_up_right_hand.png'))
-player_up_right = pygame.transform.scale(player_up_right, (160, 160))
 
 # velocity
 player_velocity = 10
@@ -60,7 +69,7 @@ while running:
 
     while move_x != 0 or move_y != 0:
        current_sprite = player_up_left
-       time.sleep(1) 
+       
        current_sprite = player_up_right
     else:
         current_sprite = player_idle
