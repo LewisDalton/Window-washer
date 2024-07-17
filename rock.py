@@ -1,12 +1,15 @@
 import pygame
 import os
 import time
+import random
 
 class Rock:
     def __init__(self, res_x, res_y) -> None:
         self.sprite_size = [160, 160]
         self.pos = [0,0]
-        self.move = False
+        self.res_y = res_y
+        self.res_x = res_x
+        self.lanes = [res_x / 3, res_x / 3 * 2, res_x]
 
         self.sprites: list = []
         self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'rock_0.png')))
@@ -25,6 +28,11 @@ class Rock:
 
     def fall(self):
         print("Rock fell")
+        self.pos[1] += 5
+        print(self.lanes)
 
-        while self.move == True:
-            self.pos[1] += int(self.move) * 5
+    def bottom(self):
+        return self.pos[1] > self.res_y
+    
+    def lane_choice(self):
+        return random.choice(self.lanes)

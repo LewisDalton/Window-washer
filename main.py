@@ -41,21 +41,26 @@ class Game:
                         self.player.movement_x[1] = True
                     if event.key == pygame.K_a:
                         self.player.movement_x[0] = True
-                    if event.key == pygame.K_1:
-                        self.rock.fall()
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_d:
                         self.player.movement_x[1] = False
                     if event.key == pygame.K_a:
                         self.player.movement_x[0] = False
-            
+
+            # Rocks
+            self.rock.fall()
+            if self.rock.bottom():
+                self.rock.pos[1] = 0
+                self.rock.pos[0] = self.rock.lane_choice()
+
+
             # Drawing
             self.screen.fill((84, 192, 214))
 
             self.player.update_pos()
             self.player.render(self.screen)
             self.player.update_anim()
-
+            
             self.rock.render(self.screen)
 
             # flip() the display to put your work on screen
