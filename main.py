@@ -3,6 +3,7 @@ import os
 import math
 import sys
 from player import Player
+from rock import Rock
 
 # pygame setup
 
@@ -17,12 +18,14 @@ class Game:
         self.screen = pygame.display.set_mode((self.res_x, self.res_y))
 
         self.clock = pygame.time.Clock()
-        self.dt = 0
 
         self.player = Player(self.res_x, self.res_y)
         self.player.player_pos = [(self.res_x / 2) - (self.player.sprite_size[0] / 2), 
                                   (self.res_y / 3 * 2) - (self.player.sprite_size[1] / 2)]
-        
+
+        self.rock = Rock(self.res_x, self.res_y)
+        self.rock.pos = [(self.res_x / 2) - (self.rock.sprite_size[0] / 2) , 0]
+
     def run(self):
         while True:
             # poll for events
@@ -38,6 +41,8 @@ class Game:
                         self.player.movement_x[1] = True
                     if event.key == pygame.K_a:
                         self.player.movement_x[0] = True
+                    if event.key == pygame.K_1:
+                        self.rock.fall()
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_d:
                         self.player.movement_x[1] = False
@@ -46,9 +51,12 @@ class Game:
             
             # Drawing
             self.screen.fill((84, 192, 214))
+
             self.player.update_pos()
             self.player.render(self.screen)
             self.player.update_anim()
+
+            self.rock.render(self.screen)
 
             # flip() the display to put your work on screen
             pygame.display.flip()
