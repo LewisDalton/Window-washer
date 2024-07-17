@@ -9,7 +9,9 @@ class Rock:
         self.pos = [0,0]
         self.res_y = res_y
         self.res_x = res_x
-        self.lanes = [res_x / 3, res_x / 3 * 2, res_x]
+        self.lanes = [res_x / 6 - (self.sprite_size[0] / 2),
+                        res_x / 2 - (self.sprite_size[0] / 2),
+                         (res_x - (res_x / 6)) - (self.sprite_size[0] / 2)]
 
         self.sprites: list = []
         self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'rock_0.png')))
@@ -23,13 +25,14 @@ class Rock:
         self.rect.topleft = self.pos
         pass
 
+    def update(self):
+        self.rect.topleft = self.pos
+
     def render(self, screen):
         screen.blit(self.image, self.pos) 
 
     def fall(self):
-        print("Rock fell")
         self.pos[1] += 5
-        print(self.lanes)
 
     def bottom(self):
         return self.pos[1] > self.res_y

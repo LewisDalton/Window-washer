@@ -28,6 +28,7 @@ class Game:
 
     def run(self):
         while True:
+
             # poll for events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -53,14 +54,18 @@ class Game:
                 self.rock.pos[1] = 0
                 self.rock.pos[0] = self.rock.lane_choice()
 
+            # Collision
+            if self.player.rect.colliderect(self.rock.rect):
+                pygame.quit()
 
             # Drawing
-            self.screen.fill((84, 192, 214))
+            self.screen.fill((150, 192, 214))
 
-            self.player.update_pos()
-            self.player.render(self.screen)
+            self.player.update()
             self.player.update_anim()
+            self.player.render(self.screen)
             
+            self.rock.update()
             self.rock.render(self.screen)
 
             # flip() the display to put your work on screen

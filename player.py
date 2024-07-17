@@ -21,9 +21,10 @@ class Player:
         self.rect = self.image.get_rect()
         self.rect.topleft = self.player_pos
 
-    def update_pos(self):
+    def update(self):
         self.player_pos[0] += self.movement_x[1] * 5
         self.player_pos[0] -= self.movement_x[0] * 5
+        self.rect.topleft = self.player_pos
  
     def render(self, screen):
         screen.blit(self.image, self.player_pos)
