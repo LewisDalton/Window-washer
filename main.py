@@ -66,6 +66,7 @@ class Game:
             self.player.render(self.screen)
             
             self.rock.update()
+            self.rock.update_anim()
             self.rock.render(self.screen)
 
             # the display to put your work on screen

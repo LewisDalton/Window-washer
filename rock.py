@@ -39,3 +39,12 @@ class Rock:
     
     def lane_choice(self):
         return random.choice(self.lanes)
+    
+    def update_anim(self):
+        self.current_sprite += 0.05
+
+        if self.current_sprite >= len(self.sprites):
+            self.current_sprite = 0
+
+        self.image = self.sprites[int(self.current_sprite)]
+        self.image = pygame.transform.scale(self.image, self.sprite_size)
