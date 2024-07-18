@@ -20,7 +20,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.player = Player(self.res_x, self.res_y)
-        self.player.player_pos = [self.player.lanes[1], 
+        self.player.player_pos = [self.player.lanes[self.player.lane_index], 
                                   (self.res_y / 3 * 2) - (self.player.sprite_size[1] / 2)]
 
         self.rock = Rock(self.res_x, self.res_y)
@@ -39,14 +39,10 @@ class Game:
                         pygame.quit()
                         sys.quit()
                     if event.key == pygame.K_d:
-                        self.player.player_pos[0] = self.player.lanes[2]
+                        self.player.move_right()
                     if event.key == pygame.K_a:
-                        self.player.move_left
-                if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_d:
-                        pass
-                    if event.key == pygame.K_a:
-                        pass
+                        self.player.move_left()
+                
             # Rocks
             self.rock.fall()
             if self.rock.bottom():
@@ -55,7 +51,7 @@ class Game:
 
             # Collision
             if self.player.rect.colliderect(self.rock.rect):
-                print('You Died')
+                pygame.quit()
 
             # Drawing
             self.screen.fill((70, 163, 250))

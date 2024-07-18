@@ -12,9 +12,10 @@ class Player:
         self.lanes = [res_x / 6 - (self.sprite_size[0] / 2),
                 res_x / 2 - (self.sprite_size[0] / 2),
                     (res_x - (res_x / 6)) - (self.sprite_size[0] / 2)]
-        self.current_lane
+        self.lane_index = 1
+        self.player_pos = [self.lanes[self.lane_index], 1000]
 
-        self.player_pos = [self.lanes[1], 1000]
+        # Sprites
         self.sprites: list = []
         self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'idle_character.png')))
         self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'moving_up_left_hand.png')))
@@ -32,22 +33,20 @@ class Player:
         screen.blit(self.image, self.player_pos)
 
     def update_anim(self):
-        if self.movement_x[0] == True or self.movement_x[1] == True:
-            self.current_sprite += 0.1
+        self.current_sprite += 0.08
 
-            if self.current_sprite >= len(self.sprites):
-                self.current_sprite = 0
+        if self.current_sprite > len(self.sprites):
+            self.current_sprite = 0
 
-            self.image = self.sprites[int(self.current_sprite)]
-            self.image = pygame.transform.scale(self.image, self.sprite_size)
-
+        self.image = self.sprites[int(self.current_sprite)]
+        self.image = pygame.transform.scale(self.image, self.sprite_size)
+        
     def move_right(self):
-        self.current_lane 
-        self.player_pos[0] = self.current_lane 
+        if self.lane_index < len(self.lanes) - 1:
+            self.lane_index += 1
+            self.player_pos[0] = self.lanes[self.lane_index]
         
-        
-        return 
-        print("pressed d")
-    
     def move_left(self):
-        return self.current_lane == self.current_lane - 1
+        if self.lane_index > 0:
+            self.lane_index -= 1
+            self.player_pos[0] = self.lanes[self.lane_index]
