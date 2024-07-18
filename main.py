@@ -56,10 +56,10 @@ class Game:
 
             # Collision
             if self.player.rect.colliderect(self.rock.rect):
-                pygame.quit()
+                print('You Died')
 
             # Drawing
-            self.screen.fill((150, 192, 214))
+            self.screen.fill((70, 163, 250))
 
             self.player.update()
             self.player.update_anim()
@@ -68,9 +68,9 @@ class Game:
             self.rock.update()
             self.rock.render(self.screen)
 
-            # flip() the display to put your work on screen
-            pygame.display.flip()
+            # the display to put your work on screen
             pygame.display.update()
             self.clock.tick(60)
-
+        pygame.quit()
+        sys.exit()
 Game().run()

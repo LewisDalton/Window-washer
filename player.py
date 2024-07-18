@@ -7,7 +7,7 @@ class Player:
     def __init__(self, res_x, res_y) -> None:
         super().__init__()
         self.sprite_size = [160, 160]
-        self.player_pos = [0, 0]
+        self.player_pos = [1000, 1000]
         self.movement_y = False
         self.movement_x = [False, False]
 
