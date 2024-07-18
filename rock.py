@@ -32,7 +32,7 @@ class Rock:
         screen.blit(self.image, self.pos) 
 
     def fall(self):
-        self.pos[1] += 5
+        self.pos[1] += 8
 
     def bottom(self):
         return self.pos[1] > self.res_y

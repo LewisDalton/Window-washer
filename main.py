@@ -16,6 +16,9 @@ class Game:
         self.res_x = 824
         self.res_y = 1020
         self.screen = pygame.display.set_mode((self.res_x, self.res_y))
+        self.bg = pygame.image.load(os.path.join('assets', '.png_files' ,'background.png'))
+        self.tiles = math.ceil(self.res_y / self.bg.get_height()) + 1
+        self.scroll = 0
 
         self.clock = pygame.time.Clock()
 
@@ -28,7 +31,7 @@ class Game:
 
     def run(self):
         while True:
-
+            
             # poll for events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -42,6 +45,9 @@ class Game:
                         self.player.move_right()
                     if event.key == pygame.K_a:
                         self.player.move_left()
+                    if event.key == pygame.K_t:
+                        print(self.tiles)
+                        pass
                 
             # Rocks
             self.rock.fall()
@@ -53,9 +59,16 @@ class Game:
             if self.player.rect.colliderect(self.rock.rect):
                 pygame.quit()
 
-            # Drawing
-            self.screen.fill((70, 163, 250))
+            # Scrolling background
+            self.scroll += 5
 
+            for i in range(0, self.tiles):
+                self.screen.blit(self.bg, (0, -i * self.bg.get_height() + self.scroll))
+
+            if self.scroll > self.bg.get_height():
+                self.scroll = 0
+            
+            # Drawing
             self.player.update()
             self.player.update_anim()
             self.player.render(self.screen)
