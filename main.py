@@ -66,7 +66,7 @@ class Game:
                 pygame.quit()
 
             # Scrolling background
-            self.scroll += 5
+            self.scroll += 3
 
             for i in range(0, self.tiles):
                 self.screen.blit(self.bg, (0, -i * self.bg.get_height() + self.scroll))
