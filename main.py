@@ -4,6 +4,7 @@ import math
 import sys
 from player import Player
 from rock import Rock
+from score import Score
 
 # pygame setup
 
@@ -22,12 +23,17 @@ class Game:
 
         self.clock = pygame.time.Clock()
 
+        # Player
         self.player = Player(self.res_x, self.res_y)
         self.player.player_pos = [self.player.lanes[self.player.lane_index], 
                                   (self.res_y / 3 * 2) - (self.player.sprite_size[1] / 2)]
 
+        # Rock
         self.rock = Rock(self.res_x, self.res_y)
         self.rock.pos = [(self.res_x / 2) - (self.rock.sprite_size[0] / 2) , 0]
+
+        # Score
+        self.score = Score()
 
     def run(self):
         while True:
@@ -68,13 +74,16 @@ class Game:
             if self.scroll > self.bg.get_height():
                 self.scroll = 0
             
-            # Drawing
+            # Updating positions
             self.player.update()
             self.player.update_anim()
-            self.player.render(self.screen)
-            
             self.rock.update()
             self.rock.update_anim()
+            self.score.update()
+
+            # Rendering
+            self.score.render(self.screen)
+            self.player.render(self.screen)
             self.rock.render(self.screen)
 
             # the display to put your work on screen
@@ -82,4 +91,5 @@ class Game:
             self.clock.tick(60)
         pygame.quit()
         sys.exit()
+
 Game().run()
