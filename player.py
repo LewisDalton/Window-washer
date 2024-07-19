@@ -17,12 +17,12 @@ class Player:
 
         # Sprites
         self.sprites: list = []
-        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'idle_character.png')))
-        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'moving_up_left_hand.png')))
-        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'moving_up_right_hand.png')))
+        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'idle_character.png')).convert_alpha())
+        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'moving_up_left_hand.png')).convert_alpha())
+        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'moving_up_right_hand.png')).convert_alpha())
         self.current_sprite: int = 0
         self.image = self.sprites[self.current_sprite]
-        self.image = pygame.transform.scale(self.image, self.sprite_size)
+        self.image = pygame.transform.scale(self.image, self.sprite_size).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.topleft = self.player_pos
 

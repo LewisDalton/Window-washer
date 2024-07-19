@@ -14,10 +14,10 @@ class Rock:
                          (res_x - (res_x / 6)) - (self.sprite_size[0] / 2)]
 
         self.sprites: list = []
-        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'rock_0.png')))
-        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'rock_1.png')))
-        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'rock_2.png')))
-        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'rock_3.png')))
+        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'rock_0.png')).convert_alpha())
+        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'rock_1.png')).convert_alpha())
+        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'rock_2.png')).convert_alpha())
+        self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'rock_3.png')).convert_alpha())
         self.current_sprite: int = 0
         self.image = self.sprites[self.current_sprite]
         self.image = pygame.transform.scale(self.image, self.sprite_size)

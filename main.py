@@ -17,7 +17,7 @@ class Game:
         self.res_x = 824
         self.res_y = 1020
         self.screen = pygame.display.set_mode((self.res_x, self.res_y))
-        self.bg = pygame.image.load(os.path.join('assets', '.png_files' ,'background.png'))
+        self.bg = pygame.image.load(os.path.join('assets', '.png_files' ,'background.png')).convert()
         self.tiles = math.ceil(self.res_y / self.bg.get_height()) + 1
         self.scroll = 0
 
