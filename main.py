@@ -4,7 +4,7 @@ import math
 import sys
 from player import Player
 from rock import Rock
-from score import Score
+from text import Score
 
 # pygame setup
 
@@ -18,8 +18,16 @@ class Game:
         self.res_y = 1020
         self.screen = pygame.display.set_mode((self.res_x, self.res_y))
         self.bg = pygame.image.load(os.path.join('assets', '.png_files' ,'background.png')).convert()
+        self.menu_bg = pygame.image.load(os.path.join('assets', '.png_files' ,'menu_bg.jpg')).convert()
+        self.menu_bg = pygame.transform.scale(self.menu_bg, (self.res_x, self.res_y))
+        self.menu_bg_rect = self.menu_bg.get_rect()
         self.tiles = math.ceil(self.res_y / self.bg.get_height()) + 1
         self.scroll = 0
+
+        # Text
+        self.font = pygame.font.Font(os.path.join('assets', 'fonts', 'ARCADECLASSIC.TTF'), 64)
+        self.start_text = self.font.render("PRESS 1 TO START" ,True, (255, 255, 255,))
+        self.start_rect = self.start_text.get_rect()
 
         self.clock = pygame.time.Clock()
 
@@ -34,6 +42,24 @@ class Game:
 
         # Score
         self.score = Score()
+    
+    def menu(self):
+        while True:
+            # poll for events
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.quit()
+                if event.type == pygame.KEYDOWN: 
+                    if event.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        sys.quit()
+                    if event.key == pygame.K_1:
+                        self.run()
+            self.screen.blit(self.start_text, self.start_rect)
+            self.screen.blit(self.menu_bg, self.menu_bg_rect)
+            pygame.display.update()
+        pass
 
     def run(self):
         while True:
@@ -45,15 +71,11 @@ class Game:
                     sys.quit()
                 if event.type == pygame.KEYDOWN: 
                     if event.key == pygame.K_ESCAPE:
-                        pygame.quit()
-                        sys.quit()
+                        self.menu()
                     if event.key == pygame.K_d:
                         self.player.move_right()
                     if event.key == pygame.K_a:
                         self.player.move_left()
-                    if event.key == pygame.K_t:
-                        print(self.tiles)
-                        pass
                 
             # Rocks
             self.rock.fall()
@@ -92,4 +114,4 @@ class Game:
         pygame.quit()
         sys.exit()
 
-Game().run()
+Game().menu()
