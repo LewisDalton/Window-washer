@@ -15,7 +15,7 @@ class Game:
         pygame.display.set_caption('Window Washer')
 
         self.res_x = 824
-        self.res_y = 1020
+        self.res_y = 1000
         self.screen = pygame.display.set_mode((self.res_x, self.res_y))
         self.bg = pygame.image.load(os.path.join('assets', '.png_files' ,'background.png')).convert()
         self.tiles = math.ceil(self.res_y / self.bg.get_height()) + 1
@@ -42,14 +42,15 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    sys.quit()
+                    sys.exit()
                 if event.type == pygame.KEYDOWN: 
                     if event.key == pygame.K_ESCAPE:
                         pygame.quit()
-                        sys.quit()
+                        sys.exit()
                     if event.key == pygame.K_SPACE:
                         self.run()
-            
+                    if event.key == pygame.K_TAB:
+                        self.score.read()
             self.screen.blit(self.menu.menu_bg, self.menu.menu_bg_rect)
             self.screen.blit(self.menu.start_text, self.menu.centre_screen)
             pygame.display.update()
@@ -62,7 +63,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    sys.quit()
+                    sys.exit()
                 if event.type == pygame.KEYDOWN: 
                     if event.key == pygame.K_ESCAPE:
                         self.menu_loop()
@@ -79,6 +80,7 @@ class Game:
 
             # Collision
             if self.player.rect.colliderect(self.rock.rect):
+                self.score.save()
                 pygame.quit()
 
             # Scrolling background
@@ -98,10 +100,10 @@ class Game:
             self.score.update()
 
             # Rendering
-            self.score.render(self.screen)
             self.player.render(self.screen)
             self.rock.render(self.screen)
-
+            self.score.render(self.screen)
+           
             # the display to put your work on screen
             pygame.display.update()
             self.clock.tick(60)

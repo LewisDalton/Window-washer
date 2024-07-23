@@ -50,3 +50,6 @@ class Player:
         if self.lane_index > 0:
             self.lane_index -= 1
             self.player_pos[0] = self.lanes[self.lane_index]
+
+    def dead(self):
+        

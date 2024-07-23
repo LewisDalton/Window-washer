@@ -1,6 +1,7 @@
 import pygame
 import os
 import sys
+import csv
 
 class Score():
     def __init__(self) -> None:
@@ -14,10 +15,23 @@ class Score():
         self.score_text = self.font.render(str(self.score) ,True, (255, 255, 255,))
 
     def render(self, screen):
-        screen.blit(self.score_text, self.score_rect)
+        screen.blit(self.score_text, (10, 10))
+
+    def read(self):
+        with open('highscores.csv', newline = '') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                print()
 
     def save(self):
         # Make this funciton save data to a csv file
+        with open('highscores.csv', newline='') as f:
+            pass
+
+
+        '''if self.score > int(f_read.read()):
+            f_write.write(str(self.score))
+            f_write.close()'''
         pass
 
 class Menu():
