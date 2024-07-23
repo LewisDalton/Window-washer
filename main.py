@@ -4,7 +4,7 @@ import math
 import sys
 from player import Player
 from rock import Rock
-from text import Score
+from text import Score, Menu
 
 # pygame setup
 
@@ -18,16 +18,8 @@ class Game:
         self.res_y = 1020
         self.screen = pygame.display.set_mode((self.res_x, self.res_y))
         self.bg = pygame.image.load(os.path.join('assets', '.png_files' ,'background.png')).convert()
-        self.menu_bg = pygame.image.load(os.path.join('assets', '.png_files' ,'menu_bg.jpg')).convert()
-        self.menu_bg = pygame.transform.scale(self.menu_bg, (self.res_x, self.res_y))
-        self.menu_bg_rect = self.menu_bg.get_rect()
         self.tiles = math.ceil(self.res_y / self.bg.get_height()) + 1
         self.scroll = 0
-
-        # Text
-        self.font = pygame.font.Font(os.path.join('assets', 'fonts', 'ARCADECLASSIC.TTF'), 64)
-        self.start_text = self.font.render("PRESS 1 TO START" ,True, (255, 255, 255,))
-        self.start_rect = self.start_text.get_rect()
 
         self.clock = pygame.time.Clock()
 
@@ -40,10 +32,11 @@ class Game:
         self.rock = Rock(self.res_x, self.res_y)
         self.rock.pos = [(self.res_x / 2) - (self.rock.sprite_size[0] / 2) , 0]
 
-        # Score
+        # Text
         self.score = Score()
-    
-    def menu(self):
+        self.menu = Menu(self.res_x, self.res_y)
+
+    def menu_loop(self):
         while True:
             # poll for events
             for event in pygame.event.get():
@@ -54,10 +47,11 @@ class Game:
                     if event.key == pygame.K_ESCAPE:
                         pygame.quit()
                         sys.quit()
-                    if event.key == pygame.K_1:
+                    if event.key == pygame.K_SPACE:
                         self.run()
-            self.screen.blit(self.start_text, self.start_rect)
-            self.screen.blit(self.menu_bg, self.menu_bg_rect)
+            
+            self.screen.blit(self.menu.menu_bg, self.menu.menu_bg_rect)
+            self.screen.blit(self.menu.start_text, self.menu.centre_screen)
             pygame.display.update()
         pass
 
@@ -71,7 +65,7 @@ class Game:
                     sys.quit()
                 if event.type == pygame.KEYDOWN: 
                     if event.key == pygame.K_ESCAPE:
-                        self.menu()
+                        self.menu_loop()
                     if event.key == pygame.K_d:
                         self.player.move_right()
                     if event.key == pygame.K_a:
@@ -80,7 +74,7 @@ class Game:
             # Rocks
             self.rock.fall()
             if self.rock.bottom():
-                self.rock.pos[1] = 0
+                self.rock.pos[1] = 0 - self.rock.sprite_size[1]
                 self.rock.pos[0] = self.rock.lane_choice()
 
             # Collision
@@ -114,4 +108,4 @@ class Game:
         pygame.quit()
         sys.exit()
 
-Game().menu()
+Game().menu_loop()
