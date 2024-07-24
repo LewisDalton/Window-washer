@@ -23,6 +23,9 @@ class Score():
             for row in reader:
                 print()
 
+    def reset(self):
+        self.score = 0
+
     def save(self):
         # Make this funciton save data to a csv file
         with open('highscores.csv', newline='') as f:

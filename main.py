@@ -25,20 +25,28 @@ class Game:
 
         # Player
         self.player = Player(self.res_x, self.res_y)
-        self.player.player_pos = [self.player.lanes[self.player.lane_index], 
+        self.player_start_pos = [self.player.lanes[self.player.lane_index], 
                                   (self.res_y / 3 * 2) - (self.player.sprite_size[1] / 2)]
-
+        self.player.player_pos = self.player_start_pos.copy()
         # Rock
         self.rock = Rock(self.res_x, self.res_y)
-        self.rock.pos = [(self.res_x / 2) - (self.rock.sprite_size[0] / 2) , 0]
-
+        self.rock_start_pos = [(self.res_x / 2) - (self.rock.sprite_size[0] / 2) , 0]
+        self.rock.pos = self.rock_start_pos.copy()       
         # Text
         self.score = Score()
         self.menu = Menu(self.res_x, self.res_y)
 
+    def game_reset(self):
+        self.player.player_pos = self.player_start_pos.copy()
+        self.player.lane_index = 1  # Reset lane to middle
+        self.rock.pos = self.rock_start_pos.copy()
+        self.scroll = 0
+        self.score.reset()
+
     def menu_loop(self):
         while True:
-            # poll for events
+            self.screen.fill((0 ,0 ,0))
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -51,22 +59,28 @@ class Game:
                         self.run()
                     if event.key == pygame.K_TAB:
                         self.score.read()
+
+            # Rendering
             self.screen.blit(self.menu.menu_bg, self.menu.menu_bg_rect)
             self.screen.blit(self.menu.start_text, self.menu.centre_screen)
+
+            # Setting Framerate
             pygame.display.update()
+            self.clock.tick(60)
         pass
 
     def run(self):
-        while True:
+        running = True
+        while running:
+            self.screen.fill((0 ,0 ,0))
             
-            # poll for events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.KEYDOWN: 
                     if event.key == pygame.K_ESCAPE:
-                        self.menu_loop()
+                        running = False
                     if event.key == pygame.K_d:
                         self.player.move_right()
                     if event.key == pygame.K_a:
@@ -81,7 +95,9 @@ class Game:
             # Collision
             if self.player.rect.colliderect(self.rock.rect):
                 self.score.save()
-                pygame.quit()
+                running = False
+                self.screen.fill((0, 0, 0))
+                self.game_reset()
 
             # Scrolling background
             self.scroll += 3
@@ -104,10 +120,8 @@ class Game:
             self.rock.render(self.screen)
             self.score.render(self.screen)
            
-            # the display to put your work on screen
+            # setting framerate
             pygame.display.update()
             self.clock.tick(60)
-        pygame.quit()
-        sys.exit()
 
 Game().menu_loop()

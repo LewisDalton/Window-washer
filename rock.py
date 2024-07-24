@@ -6,7 +6,7 @@ import random
 class Rock:
     def __init__(self, res_x, res_y) -> None:
         self.sprite_size = [160, 160]
-        self.pos = [0,0]
+        self.pos = [1000, 1000]
         self.res_y = res_y
         self.res_x = res_x
         self.lanes = [res_x / 6 - (self.sprite_size[0] / 2),
@@ -20,7 +20,7 @@ class Rock:
         self.sprites.append(pygame.image.load(os.path.join('assets', '.png_files' ,'rock_3.png')).convert_alpha())
         self.current_sprite: int = 0
         self.image = self.sprites[self.current_sprite]
-        self.image = pygame.transform.scale(self.image, self.sprite_size)
+        self.image = pygame.transform.scale(self.image, self.sprite_size).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.topleft = self.pos
         pass

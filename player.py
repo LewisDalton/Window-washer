@@ -9,11 +9,12 @@ class Player:
         self.sprite_size = [160, 160]
         self.movement_y = False
         self.movement_x = [False, False]
+        self.dead = True
         self.lanes = [res_x / 6 - (self.sprite_size[0] / 2),
                 res_x / 2 - (self.sprite_size[0] / 2),
                     (res_x - (res_x / 6)) - (self.sprite_size[0] / 2)]
         self.lane_index = 1
-        self.player_pos = [self.lanes[self.lane_index], 1000]
+        self.player_pos = [0, 0]
 
         # Sprites
         self.sprites: list = []
@@ -51,5 +52,5 @@ class Player:
             self.lane_index -= 1
             self.player_pos[0] = self.lanes[self.lane_index]
 
-    def dead(self):
-        
+    def reset(self):
+        self.player_pos = self.player_pos
