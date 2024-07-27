@@ -2,9 +2,9 @@ import pygame
 import os
 import math
 import sys
-from player import Player
-from rock import Rock
-from text import Score, Menu
+from data.scripts.player import Player
+from data.scripts.rock import Rock
+from data.scripts.text import Score, Menu
 
 # pygame setup
 
@@ -58,11 +58,17 @@ class Game:
                     if event.key == pygame.K_SPACE:
                         self.run()
                     if event.key == pygame.K_TAB:
-                        self.score.read()
+                        print(self.menu.text_box_rect)
+                    
+                    self.menu.username += event.unicode
 
             # Rendering
             self.screen.blit(self.menu.menu_bg, self.menu.menu_bg_rect)
-            self.screen.blit(self.menu.start_text, self.menu.centre_screen)
+            self.menu.render_text_box(self.screen)
+            self.menu.render_buttons(self.screen)
+
+            # Updating
+            self.menu.update_text()
 
             # Setting Framerate
             pygame.display.update()
