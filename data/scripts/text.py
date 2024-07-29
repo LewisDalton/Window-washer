@@ -54,8 +54,9 @@ class Menu():
         self.font = pygame.font.Font(os.path.join('assets', 'fonts', 'ARCADECLASSIC.TTF'), 64)
         self.username = ''
         self.text_box = self.font.render(self.username ,True, (255, 255, 255,))
-        self.text_box_rect = self.text_box.get_rect()
+        self.text_box_rect = pygame.Rect(200, 200, 195, 50)
         self.text_box_rect = self.tool.centre_screen(self.text_box_rect, res_x, res_y)
+        self.text_box_rect.y -= 60
 
         # Buttons
         self.play_button = self.font.render('play' ,True, (255, 255, 255,))
@@ -64,7 +65,9 @@ class Menu():
         pass
 
     def render_text_box(self, screen):
-        screen.blit(self.text_box, (0, 0))
+        pygame.draw.rect(screen, (255, 255, 255), self.text_box_rect, 3)
+        screen.blit(self.text_box, (self.text_box_rect.x +10, self.text_box_rect.y - 5))
+        pass
 
     def update_text(self):
         self.text_box = self.font.render(self.username ,True, (255, 255, 255,))

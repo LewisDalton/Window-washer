@@ -14,4 +14,7 @@ class Tool():
         pos_x = res_x / 2 - (rect.width / 2)
         pos_y = res_y / 2 - (rect.height / 2)
 
-        return [pos_x, pos_y]
+        rect.x = pos_x
+        rect.y = pos_y
+
+        return rect

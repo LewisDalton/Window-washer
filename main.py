@@ -58,9 +58,14 @@ class Game:
                     if event.key == pygame.K_SPACE:
                         self.run()
                     if event.key == pygame.K_TAB:
-                        print(self.menu.text_box_rect)
-                    
-                    self.menu.username += event.unicode
+                        # For debugging
+                        pass
+
+                    if event.key == pygame.K_BACKSPACE:
+                        self.menu.username = self.menu.username[0:-1]
+                    else:
+                        if len(self.menu.username) < 5:
+                           self.menu.username += event.unicode
 
             # Rendering
             self.screen.blit(self.menu.menu_bg, self.menu.menu_bg_rect)
