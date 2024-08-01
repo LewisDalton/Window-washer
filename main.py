@@ -5,6 +5,7 @@ import sys
 from data.scripts.player import Player
 from data.scripts.rock import Rock
 from data.scripts.text import Score, Menu
+from data.scripts.user import User
 
 # pygame setup
 
@@ -28,13 +29,18 @@ class Game:
         self.player_start_pos = [self.player.lanes[self.player.lane_index], 
                                   (self.res_y / 3 * 2) - (self.player.sprite_size[1] / 2)]
         self.player.player_pos = self.player_start_pos.copy()
+        
         # Rock
         self.rock = Rock(self.res_x, self.res_y)
         self.rock_start_pos = [(self.res_x / 2) - (self.rock.sprite_size[0] / 2) , 0]
         self.rock.pos = self.rock_start_pos.copy()       
+ 
+        # User
+        self.user = User()       
+ 
         # Text
         self.score = Score()
-        self.menu = Menu(self.res_x, self.res_y)
+        self.menu = Menu(self.res_x, self.res_y, self.user)
 
     def game_reset(self):
         self.player.player_pos = self.player_start_pos.copy()
@@ -58,22 +64,22 @@ class Game:
                     if event.key == pygame.K_SPACE:
                         self.run()
                     if event.key == pygame.K_TAB:
-                        # For debugging
+                        print(self.user.username)
                         pass
 
                     if event.key == pygame.K_BACKSPACE:
-                        self.menu.username = self.menu.username[0:-1]
+                        self.user.username = self.user.username[0:-1]
                     else:
-                        if len(self.menu.username) < 5:
-                           self.menu.username += event.unicode
-
+                        if len(self.user.username) < 5:
+                           self.user.username += event.unicode
+                    
+            # Updating
+            self.menu.update_text()
+            
             # Rendering
             self.screen.blit(self.menu.menu_bg, self.menu.menu_bg_rect)
             self.menu.render_text_box(self.screen)
             self.menu.render_buttons(self.screen)
-
-            # Updating
-            self.menu.update_text()
 
             # Setting Framerate
             pygame.display.update()
