@@ -24,23 +24,21 @@ class Game:
 
         self.clock = pygame.time.Clock()
 
-        # Player
+        # Class imports
+        self.score = Score()
+        self.user = User(self.score)       
+        self.menu = Menu(self.res_x, self.res_y, self.user)
         self.player = Player(self.res_x, self.res_y)
+        self.rock = Rock(self.res_x, self.res_y)
+        
+        # Player
         self.player_start_pos = [self.player.lanes[self.player.lane_index], 
                                   (self.res_y / 3 * 2) - (self.player.sprite_size[1] / 2)]
         self.player.player_pos = self.player_start_pos.copy()
         
         # Rock
-        self.rock = Rock(self.res_x, self.res_y)
         self.rock_start_pos = [(self.res_x / 2) - (self.rock.sprite_size[0] / 2) , 0]
         self.rock.pos = self.rock_start_pos.copy()       
- 
-        # User
-        self.user = User()       
- 
-        # Text
-        self.score = Score()
-        self.menu = Menu(self.res_x, self.res_y, self.user)
 
     def game_reset(self):
         self.player.player_pos = self.player_start_pos.copy()
@@ -64,7 +62,7 @@ class Game:
                     if event.key == pygame.K_SPACE:
                         self.run()
                     if event.key == pygame.K_TAB:
-                        print(self.user.username)
+                        print(self.score.score) 
                         pass
 
                     if event.key == pygame.K_BACKSPACE:
@@ -102,7 +100,9 @@ class Game:
                         self.player.move_right()
                     if event.key == pygame.K_a:
                         self.player.move_left()
-                
+                    if event.key == pygame.K_TAB:
+                            print(self.score.score) 
+                            pass
             # Rocks
             self.rock.fall()
             if self.rock.bottom():
@@ -111,7 +111,7 @@ class Game:
 
             # Collision
             if self.player.rect.colliderect(self.rock.rect):
-                self.score.save()
+                self.user.save()
                 running = False
                 self.screen.fill((0, 0, 0))
                 self.game_reset()

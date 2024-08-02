@@ -3,17 +3,23 @@ import csv
 import os
 
 class User():
-    def __init__(self) -> None:
+    def __init__(self, score) -> None:
+        self.score = score
+
         self.username = ''
         self.data = os.path.join('data', 'highscores.csv')
     
-    def create_user():
-        
-        pass
-
     def save(self):
         # Make this funciton save data to a csv file
-        pass
+        
+        with open(self.data, mode = 'w', newline = '') as f:
+           headers = ['username', 'points']
+           writer = csv.DictWriter(f, fieldnames=headers)
+           
+           writer.writeheader()
+           writer.writerow({headers[0]: self.username, headers[1]: self.score.score})
+
+
 
 
         '''if self.score > int(f_read.read()):
