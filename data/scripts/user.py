@@ -11,14 +11,28 @@ class User():
     
     def save(self):
         # Make this funciton save data to a csv file
-        
-        with open(self.data, mode = 'w', newline = '') as f:
-           headers = ['username', 'points']
-           writer = csv.DictWriter(f, fieldnames=headers)
-           
-           writer.writeheader()
-           writer.writerow({headers[0]: self.username, headers[1]: self.score.score})
+        username_exists = False
+        score_higher = False
+        headers = ['username', 'points']
+        rows = []
 
+        with open(self.data, newline='') as f_read:
+            reader = csv.DictReader(f_read)
+            for row in reader:
+                if row['username'] == self.username:
+                    username_exists == True
+                    if int(row['points']) < self.score.score:
+                        row['points'] = self.score.score
+                rows.append(row)
+
+        with open(self.data, mode = 'w', newline = '') as f_write:
+            writer = csv.DictWriter(f_write, fieldnames=headers, lineterminator='\n')
+            if username_exists == True:
+                writer.writerows(rows)
+                print('username is here')
+            else:
+                with open(self.data, mode = 'a', newline = '') as f_append:
+                    writer.writerow({headers[0]: self.username, headers[1]: self.score.score}) 
 
 
 
